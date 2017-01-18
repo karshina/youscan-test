@@ -13,4 +13,12 @@ Where `"API_KEY"` would be the key you obtain from these guys https://themoviedb
 
 --------------
 
+# Deploy
+
+(make sure you committed everything before deploying)
+```bash
+npm run build
+npm run deploy
+```
+
 TODO: write readme about installation and other stuff
