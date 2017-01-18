@@ -21,6 +21,7 @@
     "reselect": "^2.5.4"
   },
   "scripts": {
+    "deploy": "git push origin `git subtree split --prefix build master`:gh-pages --force",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
