@@ -1,12 +1,16 @@
+.List-pagination-wrap {
+  text-align: center;
+}
+
 .List ul.pagination {
-    display: inline-block;
-    padding-left: 15px;
-    padding-right: 15px;
+  display: inline-block;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 .List ul.pagination li {
-    display: inline-block;
-    margin-right: 10px;
+  display: inline-block;
+  margin-right: 10px;
 }
 
 .List ul.pagination li a {
@@ -23,5 +27,9 @@
 }
 
 .List ul.pagination .break a {
-    cursor: default;
+  cursor: default;
+}
+
+.List-grid-tile a {
+  color: white;
 }

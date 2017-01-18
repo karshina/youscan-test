@@ -14,13 +14,43 @@ export function fetchMovies() {
       url = apiUrl('/search/movie', {page, query})
     }
 
-    fetch(url)
-      .then(res => {
-        return res.json()
+    const initialReqs = [
+      fetch(apiUrl('/configuration')).then(json),
+      fetch(url).then(json),
+    ]
+
+    Promise.all(initialReqs).then(([resConfig, resData]) => {
+      dispatch({
+        type: constants.SET_MOVIES,
+        movies: resData.results,
+        config: resConfig,
+        pageCount: resData.total_pages
       })
-      .then(res => {
-        dispatch({ type: constants.SET_MOVIES, movies: res.results, pageCount: res.total_pages })
-        dispatch(actions.setLoading({movies: false}))
+      dispatch(actions.setLoading({movies: false}))
+
+      const movieMapper = resData.results.map(fetchOneMovie)
+
+      Promise.all(movieMapper).then(movieDetails => {
+        dispatch({
+          type: constants.SET_MOVIES,
+          movies: resData.results.map((movie, i) => {
+            return {
+              ...movie,
+              human_genres: movieDetails[i].genres
+            }
+          }),
+          config: resConfig,
+          pageCount: resData.total_pages
+        })
       })
+    })
   }
+}
+
+function fetchOneMovie(movie) {
+  return fetch(apiUrl('/movie/' + movie.id)).then(json)
+}
+
+function json(res) {
+  return res.json()
 }

@@ -1,11 +1,16 @@
-.App {
-  text-align: center;
+.App-container {
+  width: 800px;
+  margin: 0 auto;
 }
 
 .App-header {
   background-color: #222;
-  height: 100px;
+  height: 60px;
   padding: 20px;
   color: white;
 }
 
+.App-header h2 {
+  text-align: center;
+  font-family: sans-serif;
+}

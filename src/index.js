@@ -4,11 +4,14 @@ import { Provider } from 'react-redux'
 import { Router, Route, IndexRedirect, browserHistory } from 'react-router'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
+import injectTapEventPlugin from 'react-tap-event-plugin'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import thunk from 'redux-thunk'
 import * as reducers from './reducers'
 import * as containers from './containers'
 import './index.css'
+
+injectTapEventPlugin()
 
 const reducer = combineReducers({
   ...reducers,

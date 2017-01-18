@@ -6,9 +6,11 @@ class App extends Component {
     return (
       <div className='App'>
         <div className='App-header'>
-          <h2>Welcome to Movie Theater</h2>
+          <div className='App-container'>
+            <h2>Welcome to Movie Theater</h2>
+          </div>
         </div>
-        <div className='App-main'>
+        <div className='App-main App-container'>
           {this.props.children}
         </div>
       </div>

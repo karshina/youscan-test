@@ -4,6 +4,7 @@ const initialAppState = {
   query: "",
   movies: [],
   movie: null,
+  config: null,
   page: 1,
   pageCount: 0
 }
@@ -14,6 +15,7 @@ export function app(state = initialAppState, action) {
       return {
         ...state,
         movies: action.movies,
+        config: action.config,
         pageCount: action.pageCount
       }
     case constants.SET_MOVIE:
