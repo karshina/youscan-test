@@ -2,9 +2,8 @@
   "name": "youscan-test",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://karshina.github.io/youscan-test",
+  "homepage": "https://karshina-youscan-test.surge.sh",
   "devDependencies": {
-    "gh-pages": "^0.12.0",
     "react-scripts": "0.8.5"
   },
   "dependencies": {
@@ -23,7 +22,7 @@
     "reselect": "^2.5.4"
   },
   "scripts": {
-    "deploy": "gh-pages -d build",
+    "deploy": "surge -p build --domain karshina-youscan-test.surge.sh",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
