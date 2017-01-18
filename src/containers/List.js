@@ -56,9 +56,11 @@ class List extends Component {
       const gridListStyle = {
         width: 800,
       }
+      const cols = 4
+      const cellHeight = 313
 
       Movies = (
-        <GridList cellHeight={413} cols={3} style={gridListStyle}>
+        <GridList cellHeight={cellHeight} cols={cols} style={gridListStyle}>
           {this.props.movies.map(movie => (
             <GridTile
               key={movie.id}
@@ -68,7 +70,7 @@ class List extends Component {
               actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
             >
               <Link to={'/movies/' + movie.id}>
-                <img src={this.getMovieThumbUrl(movie)} alt={movie.title} />
+                <img src={this.getMovieThumbUrl(movie)} alt={movie.title} style={{height: cellHeight}} />
               </Link>
             </GridTile>
           ))}
