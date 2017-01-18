@@ -59,7 +59,7 @@ class List extends Component {
     return (
       <div className='List'>
         <div className='List-search'>
-          <TextField hintText="Search for movies..." defaultValue={this.props.search} onChange={this.handleSearch} />
+          <TextField hintText="Search for movies..." defaultValue={this.props.query} onChange={this.handleSearch} />
         </div>
         { this.props.loading ? <div>Loading...</div> : Movies }
         {Pagination}
@@ -70,7 +70,7 @@ class List extends Component {
 
 const mapStateToProps = state => {
   return {
-    search: state.app.search,
+    query: state.app.query,
     movies: state.app.movies,
     page: state.app.page,
     pageCount: state.app.pageCount,

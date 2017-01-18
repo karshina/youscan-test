@@ -7,11 +7,11 @@ export function fetchMovies() {
   return (dispatch, getState) => {
     dispatch(actions.setLoading({movies: true}))
 
-    const { search, page } = getState().app
+    const { query, page } = getState().app
     let url = apiUrl('/movie/popular', {page})
 
-    if (search) {
-      url = apiUrl('/search/movie', {query: search})
+    if (query) {
+      url = apiUrl('/search/movie', {page, query})
     }
 
     fetch(url)

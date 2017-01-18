@@ -1,7 +1,7 @@
 import * as constants from '../constants'
 
 const initialAppState = {
-  search: "",
+  query: "",
   movies: [],
   movie: null,
   page: 1,
@@ -24,7 +24,7 @@ export function app(state = initialAppState, action) {
     case constants.SET_SEARCH:
       return {
         ...state,
-        search: action.search
+        query: action.query
       }
     case constants.SET_PAGE:
       return {
