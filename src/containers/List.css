@@ -1,27 +1,27 @@
-.List-movies ul.pagination {
+.List ul.pagination {
     display: inline-block;
     padding-left: 15px;
     padding-right: 15px;
 }
 
-.List-movies ul.pagination li {
+.List ul.pagination li {
     display: inline-block;
     margin-right: 10px;
 }
 
-.List-movies ul.pagination li a {
+.List ul.pagination li a {
   cursor: pointer;
   text-decoration: underline;
   color:  blue;
 }
 
-.List-movies ul.pagination li.active a {
+.List ul.pagination li.active a {
   font-weight: bold;
   pointer-events: none;
   text-decoration: none;
   color: black;
 }
 
-.List-movies ul.pagination .break a {
+.List ul.pagination .break a {
     cursor: default;
 }

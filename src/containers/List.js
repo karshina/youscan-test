@@ -22,8 +22,27 @@ class List extends Component {
 
   render() {
     let Movies = ""
+    let Pagination = ""
+
+    if (this.props.pageCount > 1) {
+      Pagination = (
+        <ReactPaginate previousLabel={"previous"}
+                       nextLabel={"next"}
+                       breakLabel={<a href="">...</a>}
+                       breakClassName={"break-me"}
+                       pageCount={this.props.pageCount}
+                       forcePage={this.props.page-1}
+                       marginPagesDisplayed={2}
+                       pageRangeDisplayed={5}
+                       onPageChange={this.handlePageClick}
+                       containerClassName={"pagination"}
+                       subContainerClassName={"pages pagination"}
+                       activeClassName={"active"} />
+      )
+    }
 
     if (!this.props.loading) {
+
       Movies = (
         <div className="List-movies">
           {this.props.movies.map(movie => {
@@ -33,20 +52,6 @@ class List extends Component {
               </div>
             )
           })}
-
-          <ReactPaginate previousLabel={"previous"}
-                         nextLabel={"next"}
-                         breakLabel={<a href="">...</a>}
-                         breakClassName={"break-me"}
-                         pageCount={this.props.pageCount}
-                         forcePage={this.props.page-1}
-                         marginPagesDisplayed={2}
-                         pageRangeDisplayed={5}
-                         onPageChange={this.handlePageClick}
-                         containerClassName={"pagination"}
-                         subContainerClassName={"pages pagination"}
-                         activeClassName={"active"} />
-
         </div>
       )
     }
@@ -57,6 +62,7 @@ class List extends Component {
           <TextField hintText="Search for movies..." defaultValue={this.props.search} onChange={this.handleSearch} />
         </div>
         { this.props.loading ? <div>Loading...</div> : Movies }
+        {Pagination}
       </div>
     )
   }
