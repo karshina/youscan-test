@@ -4,6 +4,8 @@ const initialAppState = {
   search: "",
   movies: [],
   movie: null,
+  page: 1,
+  pageCount: 0
 }
 
 export function app(state = initialAppState, action) {
@@ -11,7 +13,8 @@ export function app(state = initialAppState, action) {
     case constants.SET_MOVIES:
       return {
         ...state,
-        movies: action.movies
+        movies: action.movies,
+        pageCount: action.pageCount
       }
     case constants.SET_MOVIE:
       return {
@@ -22,6 +25,11 @@ export function app(state = initialAppState, action) {
       return {
         ...state,
         search: action.search
+      }
+    case constants.SET_PAGE:
+      return {
+        ...state,
+        page: action.page
       }
     default:
       return state

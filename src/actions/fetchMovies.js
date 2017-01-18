@@ -7,8 +7,8 @@ export function fetchMovies() {
   return (dispatch, getState) => {
     dispatch(actions.setLoading({movies: true}))
 
-    let url = apiUrl('/movie/top_rated')
-    const { search } = getState().app
+    const { search, page } = getState().app
+    let url = apiUrl('/movie/popular', {page})
 
     if (search) {
       url = apiUrl('/search/movie', {query: search})
@@ -19,7 +19,7 @@ export function fetchMovies() {
         return res.json()
       })
       .then(res => {
-        dispatch({ type: constants.SET_MOVIES, movies: res.results })
+        dispatch({ type: constants.SET_MOVIES, movies: res.results, pageCount: res.total_pages })
         dispatch(actions.setLoading({movies: false}))
       })
   }
