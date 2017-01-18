@@ -3,7 +3,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 NOTE:
-Due to security purposes I don't want to store the API KEY in source code. As a quick and dirty solution I decided to use local Storage within the local browser session
+Due to security purposes I don't want to store the API KEY in source code. As a quick and dirty solution I decided to use localStorage within the local browser session
 
 To make the application work (even in production) you need to open Web Inspector and run the following command in web console:
 
