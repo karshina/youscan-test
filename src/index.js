@@ -4,6 +4,7 @@ import { Provider } from 'react-redux'
 import { Router, Route, IndexRedirect, browserHistory } from 'react-router'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import thunk from 'redux-thunk'
 import * as reducers from './reducers'
 import * as containers from './containers'
@@ -27,8 +28,10 @@ const routes = (
 const history = syncHistoryWithStore(browserHistory, store)
 
 ReactDOM.render(
-  <Provider store={store}>
-    <Router history={history} routes={routes} />
-  </Provider>,
+  <MuiThemeProvider>
+    <Provider store={store}>
+      <Router history={history} routes={routes} />
+    </Provider>
+  </MuiThemeProvider>,
   document.getElementById('root')
 );

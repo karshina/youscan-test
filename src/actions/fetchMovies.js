@@ -7,7 +7,14 @@ export function fetchMovies() {
   return (dispatch, getState) => {
     dispatch(actions.setLoading({movies: true}))
 
-    fetch(apiUrl('/movie/top_rated'))
+    let url = apiUrl('/movie/top_rated')
+    const { search } = getState().app
+
+    if (search) {
+      url = apiUrl('/search/movie', {query: search})
+    }
+
+    fetch(url)
       .then(res => {
         return res.json()
       })

@@ -28,7 +28,6 @@ class Movie extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log('state.app', state.app)
   return {
     movie: state.app.movie,
     loading: state.loading.movie,

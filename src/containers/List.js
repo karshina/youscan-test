@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import { fetchMovies, updateSearch } from '../actions'
+import TextField from 'material-ui/TextField'
+import debounce from 'lodash/debounce'
 import './List.css'
 
 class List extends Component {
@@ -9,32 +11,27 @@ class List extends Component {
     this.props.actions.fetchMovies()
   }
 
-  handleSearch(e) {
-    this.props.actions.updateSearch(e.target.value)
-  }
+  handleSearch = debounce((e, newValue) => {
+    this.props.actions.updateSearch(newValue)
+  }, 500)
 
   render() {
-    if (this.props.loading) {
-      return (
-        <div className='List'>
-          <div>Loading...</div>
-        </div>
-      )
-    }
-
     return (
       <div className='List'>
         <div className='List-search'>
-          <input type="text" placeholder="Search for movies..." value={this.props.search} onChange={this.handleSearch.bind(this)} />
+          <TextField hintText="Search for movies..." defaultValue={this.props.search} onChange={this.handleSearch} />
         </div>
 
-        {this.props.movies.map(movie => {
-          return (
-            <div key={movie.id} className='List-movie'>
-              <Link to={'/movies/' + movie.id}>{movie.title}</Link>
-            </div>
-          )
-        })}
+        { this.props.loading ? <div>Loading...</div> :
+
+          this.props.movies.map(movie => {
+            return (
+              <div key={movie.id} className='List-movie'>
+                <Link to={'/movies/' + movie.id}>{movie.title}</Link>
+              </div>
+            )
+          })
+        }
       </div>
     )
   }
@@ -52,7 +49,7 @@ const mapDispatchToProps = dispatch => {
   return {
     actions: {
       fetchMovies: () => dispatch(fetchMovies()),
-      updateSearch: () => dispatch(updateSearch())
+      updateSearch: (query) => dispatch(updateSearch(query))
     }
   }
 }
