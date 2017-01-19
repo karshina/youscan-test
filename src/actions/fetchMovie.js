@@ -6,6 +6,7 @@ import { apiUrl } from '../lib/api'
 export function fetchMovie(id) {
   return (dispatch, getState) => {
     dispatch(actions.setLoading({movie: true}))
+    dispatch(actions.fetchSimilarMovies(id))
 
     fetch(apiUrl('/movie/' + id))
       .then(res => {

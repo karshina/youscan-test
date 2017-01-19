@@ -4,6 +4,7 @@ const initialAppState = {
   query: "",
   movies: [],
   movie: null,
+  similar: [],
   config: null,
   page: 1,
   pageCount: 0
@@ -21,6 +22,11 @@ export function app(state = initialAppState, action) {
       return {
         ...state,
         movie: action.movie
+      }
+    case constants.SET_SIMILAR_MOVIES:
+      return {
+        ...state,
+        similar: action.similar
       }
     case constants.SET_SEARCH:
       return {
@@ -45,7 +51,8 @@ export function app(state = initialAppState, action) {
 const initialLoadingState = {
   movies: true,
   movie: true,
-  config: true
+  similar: true,
+  config: true,
 }
 
 export function loading(state = initialLoadingState, action) {

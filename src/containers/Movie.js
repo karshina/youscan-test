@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import { fetchMovie, toggleMovieFav } from '../actions'
 import FavButton from '../components/FavButton'
+import MovieGrid from '../components/MovieGrid'
 
 import './Movie.css'
 
@@ -11,12 +12,18 @@ class Movie extends Component {
     this.props.actions.fetchMovie(this.props.params.id)
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.params.id !== this.props.params.id) {
+      this.props.actions.fetchMovie(nextProps.params.id)
+    }
+  }
+
   getMovieThumbUrl(movie) {
     return this.props.config.images.secure_base_url + 'w342' + movie.poster_path
   }
 
-  handleFavClick = () => {
-    this.props.actions.toggleMovieFav(this.props.movie)
+  handleFavClick(movie) {
+    this.props.actions.toggleMovieFav(movie)
   }
 
   join(arr, key) {
@@ -27,7 +34,7 @@ class Movie extends Component {
   }
 
   render() {
-    if (this.props.loading) {
+    if (this.props.loading.movie) {
       return (
         <div className='Movie'>
           <div>Loading the Movie...</div>
@@ -36,7 +43,7 @@ class Movie extends Component {
     }
 
 
-    const { movie, isFavorite, pathname } = this.props
+    const { movie, isFavorite, similar, fav, pathname, config } = this.props
 
     let context = (<i>None</i>)
 
@@ -59,7 +66,7 @@ class Movie extends Component {
               </td>
               <td className="Movie-rightCol">
                 <div className="Movie-rightCol-fav">
-                  <FavButton color="black" added={isFavorite} onClick={this.handleFavClick} />
+                  <FavButton color="black" added={isFavorite} onClick={this.handleFavClick.bind(this, movie)} />
                 </div>
                 <h1>{movie.title}</h1>
                 <p><i>{movie.tagline}</i></p>
@@ -75,6 +82,20 @@ class Movie extends Component {
                 <p><strong>Revenue, $</strong>: {movie.revenue}</p>
               </td>
             </tr>
+            <tr>
+              <td colSpan="2">
+                <h3>Similar movies</h3>
+                {this.props.loading.similar ? (
+                  <p>Loading...</p>
+                ) : (
+                  <MovieGrid movies={similar}
+                             fav={fav}
+                             config={config}
+                             context="movies"
+                             onFavClick={(movie) => this.handleFavClick(movie)} />
+                )}
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -84,15 +105,22 @@ class Movie extends Component {
 
 const mapStateToProps = state => {
   let isFavorite = false
-  const { movie, config } = state.app
+  const { movie, similar, config } = state.app
 
   if (movie) {
     isFavorite = (state.fav.find(m => { return m.id === movie.id }) !== undefined)
   }
 
+  const fav = state.fav.map(m => { return m.id })
+
   return {
-    loading: state.loading.movie,
+    loading: {
+      movie: state.loading.movie,
+      similar: state.loading.similar,
+    },
     pathname: state.routing.locationBeforeTransitions.pathname,
+    fav,
+    similar,
     movie,
     config,
     isFavorite
