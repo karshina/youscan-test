@@ -1,0 +1,13 @@
+
+.List-grid-tile {
+  overflow: visible !important;
+}
+
+.List-grid-tile .List-movie-thumb {
+  height: 313px;
+  overflow: hidden;
+}
+
+.List-grid-tile a {
+  color: white;
+}

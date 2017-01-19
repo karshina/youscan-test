@@ -1,14 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router'
-import { fetchMovies, updateSearch, setPage } from '../actions'
+import { fetchMovies, updateSearch, setPage, toggleMovieFav } from '../actions'
 import TextField from 'material-ui/TextField'
 import debounce from 'lodash/debounce'
 import ReactPaginate from 'react-paginate'
-
-import { GridList, GridTile } from 'material-ui/GridList'
-import IconButton from 'material-ui/IconButton'
-import StarBorder from 'material-ui/svg-icons/toggle/star-border'
+import MovieGrid from '../components/MovieGrid'
+import MainNav from '../components/MainNav'
 
 import './List.css'
 
@@ -23,14 +20,13 @@ class List extends Component {
 
   handlePageClick = (data) => {
     this.props.actions.setPage(data.selected + 1)
-  };
+  }
 
-  getMovieThumbUrl(movie) {
-    return this.props.config.images.secure_base_url + 'w342' + movie.poster_path
+  handleFavClick(movie) {
+    this.props.actions.toggleMovieFav(movie)
   }
 
   render() {
-    let Movies = ""
     let Pagination = ""
 
     if (this.props.pageCount > 1) {
@@ -52,38 +48,21 @@ class List extends Component {
       )
     }
 
-    if (!this.props.loading && this.props.movies.length > 0) {
-      const gridListStyle = {
-        width: 800,
-      }
-      const cols = 4
-      const cellHeight = 313
-
-      Movies = (
-        <GridList cellHeight={cellHeight} cols={cols} style={gridListStyle}>
-          {this.props.movies.map(movie => (
-            <GridTile
-              key={movie.id}
-              className='List-grid-tile'
-              title={<Link to={'/movies/' + movie.id}>{movie.title}</Link>}
-              subtitle={movie.human_genres && movie.human_genres.length ? movie.human_genres.map(g => {return g.name}).join('/') : '–'}
-              actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
-            >
-              <Link to={'/movies/' + movie.id}>
-                <img src={this.getMovieThumbUrl(movie)} alt={movie.title} style={{height: cellHeight}} />
-              </Link>
-            </GridTile>
-          ))}
-        </GridList>
-      )
-    }
+    const { movies, fav, config } = this.props
 
     return (
       <div className='List App-container'>
+        <MainNav active='movies' />
         <div className='List-search'>
           <TextField className='List-search-input' fullWidth={true} hintText="Search for movies..." defaultValue={this.props.query} onChange={this.handleSearch} />
         </div>
-        { this.props.loading ? <div>Loading...</div> : Movies }
+
+        { this.props.loading ? (
+          <div>Loading...</div>
+        ) : (
+          <MovieGrid {...{movies, fav, config}} context="movies" onFavClick={this.handleFavClick.bind(this)} />
+        ) }
+
         {Pagination}
       </div>
     )
@@ -91,13 +70,17 @@ class List extends Component {
 }
 
 const mapStateToProps = state => {
+  const { query, movies, config, page, pageCount } = state.app
+  const fav = state.fav.map(m => { return m.id })
+
   return {
-    query: state.app.query,
-    movies: state.app.movies,
-    config: state.app.config,
-    page: state.app.page,
-    pageCount: state.app.pageCount,
     loading: state.loading.movies,
+    query,
+    movies,
+    config,
+    page,
+    pageCount,
+    fav
   }
 }
 
@@ -106,7 +89,8 @@ const mapDispatchToProps = dispatch => {
     actions: {
       fetchMovies: () => dispatch(fetchMovies()),
       updateSearch: (query) => dispatch(updateSearch(query)),
-      setPage: (num) => dispatch(setPage(num))
+      setPage: (num) => dispatch(setPage(num)),
+      toggleMovieFav: (movie) => dispatch(toggleMovieFav(movie))
     }
   }
 }

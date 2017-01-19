@@ -1,0 +1,28 @@
+.App-main-navigation ul {
+  margin: 15px 0;
+  padding: 0;
+  border-bottom: #aaa 1px solid;
+}
+
+.App-main-navigation ul li {
+  display: inline-block;
+  margin-right: 15px;
+  padding: 10px 20px;
+}
+
+.App-main-navigation ul li a {
+  color: #888;
+  text-decoration: none;
+}
+
+.App-main-navigation ul li a:hover {
+  color: black;
+}
+
+.App-main-navigation ul li.active {
+  background: #eee;
+}
+
+.App-main-navigation ul li.active a {
+  color: black;
+}

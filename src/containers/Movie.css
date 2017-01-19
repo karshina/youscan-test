@@ -1,0 +1,36 @@
+.Movie table td {
+  padding: 0;
+  vertical-align: top;
+}
+
+.Movie-path {
+  padding: 15px 0;
+}
+
+.Movie-path a {
+  color: blue;
+}
+
+.Movie-leftCol {
+  width: 300px;
+}
+
+.Movie-leftCol img {
+  width: 300px;
+}
+
+.Movie table td.Movie-rightCol {
+  padding-left: 15px;
+  position: relative;
+}
+
+.Movie table td.Movie-rightCol h1 {
+  margin-top: 6px;
+  margin-right: 48px;
+}
+
+.Movie table td.Movie-rightCol .Movie-rightCol-fav {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}

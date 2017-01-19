@@ -5,6 +5,7 @@ import { apiUrl } from '../lib/api'
 
 export function fetchMovies() {
   return (dispatch, getState) => {
+
     dispatch(actions.setLoading({movies: true}))
 
     const { query, page } = getState().app
@@ -14,33 +15,28 @@ export function fetchMovies() {
       url = apiUrl('/search/movie', {page, query})
     }
 
-    const initialReqs = [
-      fetch(apiUrl('/configuration')).then(json),
-      fetch(url).then(json),
-    ]
+    fetch(url).then(json).then(res => {
 
-    Promise.all(initialReqs).then(([resConfig, resData]) => {
       dispatch({
         type: constants.SET_MOVIES,
-        movies: resData.results,
-        config: resConfig,
-        pageCount: resData.total_pages
+        movies: res.results,
+        pageCount: res.total_pages
       })
+
       dispatch(actions.setLoading({movies: false}))
 
-      const movieMapper = resData.results.map(fetchOneMovie)
+      const movieMapper = res.results.map(fetchOneMovie)
 
       Promise.all(movieMapper).then(movieDetails => {
         dispatch({
           type: constants.SET_MOVIES,
-          movies: resData.results.map((movie, i) => {
+          movies: res.results.map((movie, i) => {
             return {
               ...movie,
               human_genres: movieDetails[i].genres
             }
           }),
-          config: resConfig,
-          pageCount: resData.total_pages
+          pageCount: res.total_pages
         })
       })
     })

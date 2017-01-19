@@ -15,7 +15,6 @@ export function app(state = initialAppState, action) {
       return {
         ...state,
         movies: action.movies,
-        config: action.config,
         pageCount: action.pageCount
       }
     case constants.SET_MOVIE:
@@ -33,6 +32,11 @@ export function app(state = initialAppState, action) {
         ...state,
         page: action.page
       }
+    case constants.SET_CONFIG:
+      return {
+        ...state,
+        config: action.config
+      }
     default:
       return state
   }
@@ -41,6 +45,7 @@ export function app(state = initialAppState, action) {
 const initialLoadingState = {
   movies: true,
   movie: true,
+  config: true
 }
 
 export function loading(state = initialLoadingState, action) {
@@ -54,3 +59,24 @@ export function loading(state = initialLoadingState, action) {
       return state
   }
 }
+
+const initialFavState = []
+
+export function fav(state = initialFavState, action) {
+  switch (action.type) {
+
+    case constants.TOGGLE_MOVIE_FAV:
+
+      const { movie } = action
+      const added = state.find(m => { return m.id === movie.id })
+      if (added) {
+        return state.filter(m => { return m.id !== movie.id })
+      } else {
+        return [...state, movie]
+      }
+
+    default:
+      return state
+  }
+}
+
