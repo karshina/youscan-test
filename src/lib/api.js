@@ -1,7 +1,6 @@
 
-// Due to security purposes I don't want to store the API KEY in source code.
-// As a quick and dirty solution I decided to use localStorage within the local browser session
-export const apiKey = localStorage.getItem('api_key')
+// is it secure?
+export const apiKey = '75dda6a64c800f9602636207a2a0876d'
 
 export function apiUrl(path, query = {}) {
   return 'https://api.themoviedb.org/3' + path + '?' + toQueryString({
