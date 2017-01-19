@@ -1,6 +1,4 @@
-
-// is it secure?
-export const apiKey = '75dda6a64c800f9602636207a2a0876d'
+import { apiKey } from '../../config.js'
 
 export function apiUrl(path, query = {}) {
   return 'https://api.themoviedb.org/3' + path + '?' + toQueryString({
